@@ -1,4 +1,4 @@
-// author: Mikheev David  
+// author: Miheev David  
 #ifndef DATABASE_H
 #define DATABASE_H
 
@@ -75,7 +75,7 @@ public:
     int get_num() const { return num_group; }
     const char* get_info() const { return info; }
     void set_info(const char *s)  { strcpy(info,s); }
-    void print() { if(name != 0) cout <<" student was found: " << name << "  " << num_group << " group  " << endl << "\n+---------information---------+\n" << endl << info << endl << "\n+-----------------------------+\n"; else cout << "student not found\n"; } 
+    void print() { if(name != 0) cout << "name: " << name << "  " << num_group << " group  " << endl << "\n+---------information---------+\n" << endl << info << endl << "\n+-----------------------------+\n"; else cout << "student not found\n"; } 
       
     ~Student() { if(name) delete[] name; if(info) delete[] info; name = 0; info = 0; }
 };
@@ -105,28 +105,28 @@ public:
 
 class SList {
 public:
-    SListItem *first,*cur;
+    SListItem *first, *cur;
     SList():
         first(new SListItem),
         cur(0)
     {}
     
     int IsEmpty() {
-        return (this == 0)||(cur == 0);
+        return (cur == 0);
     }
     
     void GotoFirst() {
-        if(this) cur = first -> next;
+        cur = first -> next;
     }
     
     int GetCur(Student *v) throw(Exception) {
-        if((this == 0)||(cur == 0)) throw(Exception("list is empty"));
+        if(cur == 0) throw(Exception("list is empty"));
         *v = cur->v;
         return 0;
     }
     
     int GotoNext() {
-         if(this == 0||cur == 0||cur -> next == 0) return 1;
+         if(cur == 0||cur -> next == 0) return 1;
          cur = cur->next;
          return 0;
     }
@@ -163,7 +163,9 @@ public:
     
      ~SList() {
 	    //SListItem *tmp;
-            for(cur = first;remove();); delete cur; cur = 0;
+      for(cur = first; remove(); ); 
+			delete cur; 
+			cur = 0;
     }
 };
 
@@ -181,8 +183,7 @@ public:
         m_Begin(0),
         m_End(DEQ_MAXELEM-1),
         m_NumElem(0)
-    {
-    }
+    {}
 
     /*ListDeq(int maxElem):
         m_MaxElem(maxElem),
@@ -279,7 +280,8 @@ public:
         while(i <= m_NumElem) {
          cout << "(" << i << ") ";
          SList *l;
-         l = popBack(); l->print();
+         l = popBack(); 
+				 l->print();
          pushFront(l);
          i++;
         }
@@ -290,7 +292,8 @@ public:
         while(i <= m_NumElem) {
          cout << "(" << i << ") "; 
          SList *l;
-         l = popFront(); l->print();
+         l = popFront(); 
+				 l->print();
          pushBack(l);
          i++;
         }
@@ -300,15 +303,19 @@ public:
         SList *l; Student p;
           for(int i = 0; i < m_NumElem; i++) { 
               l = popFront(); l->GetCur(&p);
-              if(strncmp(s,p.get_name(),1) == 0) { int err; 
+              if(strncmp(s, p.get_name(), 1) == 0) { int err; 
                   for(l->GotoFirst(), err = l->IsEmpty(); !err; err = l->GotoNext()) {
                         l->GetCur(&p);
-                         if(strcmp(s,p.get_name()) == 0) { pushBack(l); p.print();  return 1; }
+                         if(strcmp(s,p.get_name()) == 0) { 
+													 pushBack(l); 
+													 p.print();  
+													 return 1; 
+												 }
                   }
            }  pushBack(l);
           }
          //cout << "student not found";
-	 return 0;
+	   return 0;
     }
           
     
@@ -318,11 +325,19 @@ public:
           SList *l; Student p; int i;
           for(i = 0; i < m_NumElem; i++) { 
               l = popFront(); l->GetCur(&p);
-              if(strncmp(s.get_name(),p.get_name(),1) == 0) { l->AddAfter(s.get_name(),s.get_num(),s.get_info()); pushBack(l); return; }
+              if(strncmp(s.get_name(), p.get_name(), 1) == 0) { 
+								l->AddAfter(s.get_name(), s.get_num(), s.get_info()); 
+								pushBack(l); 
+								return; 
+							}
               pushBack(l);
           } 
-          if(i == m_NumElem) { l = new SList; pushFront(l); front()->AddAfter(s.get_name(),s.get_num(),s.get_info()); }
-     }
+          if(i == m_NumElem) { 
+						l = new SList; 
+						pushFront(l); 
+						front()->AddAfter(s.get_name(), s.get_num(), s.get_info()); 
+					}
+       } 
     }
     
     int del_in_Deq(const char *s) {
@@ -332,13 +347,18 @@ public:
               if(l->IsEmpty()) delete l;
               else {
                      l->GetCur(&p);
-                     if(strncmp(s,p.get_name(),1) == 0) { int err = 0; 
-                     for(l->cur = l->first; !err; err = l->GotoNext()) {
-                         if(l->cur->next) { p = l->cur->next->v;
-                         if(strcmp(s,p.get_name()) == 0) l->remove();
+                     if(strncmp(s, p.get_name(), 1) == 0) { 
+											 int err = 0; 
+                       for(l->cur = l->first; !err; err = l->GotoNext()) {
+                         if(l->cur->next) { 
+													 p = l->cur->next->v;
+                           if(strcmp(s,p.get_name()) == 0) l->remove();
                         }
-                     }
-                    }  l->GotoFirst(); if(!(l->IsEmpty())) pushBack(l); else delete l;
+                      }
+                    }  
+										l->GotoFirst(); 
+										if(!(l->IsEmpty())) pushBack(l); 
+										else delete l;
                 }
         }
         if(m_NumElem == 0) return 1;
@@ -354,13 +374,18 @@ public:
    
     ListDeq& operator=(ListDeq& d) {
         if(this != &d) {
-             clear();
+            clear();
             int i = 1;
             while(i <= d.m_NumElem) { i++; 
                 SList *l = new SList,*t; Student s; int err; t = d.popFront();
                 for(t->GotoFirst(),err = t->IsEmpty(); !err; err = t->GotoNext()) {
-                        t->GetCur(&s); l->AddAfter(s.get_name(),s.get_num(),s.get_info());
-                }  l->GotoFirst(); if(!l->IsEmpty()) pushBack(l); else delete l; d.pushBack(t);
+                        t->GetCur(&s); 
+												l->AddAfter(s.get_name(), s.get_num(), s.get_info());
+                }  
+								l->GotoFirst(); 
+								if(!l->IsEmpty()) pushBack(l); 
+								else delete l; 
+								d.pushBack(t);
            }
         }
         return *this;
@@ -426,19 +451,31 @@ public:
         int search(BTreeNode *node, int key,BTreeNode** res) {
             if(node == 0x00) return 0;
              *res = node;
-            if(binsearch(node,key) == -1) return 1;
-            else return search(node->son[binsearch(node,key)],key,res);
+            if(binsearch(node, key) == -1) return 1;
+            else return search(node->son[binsearch(node, key)], key, res);
         }
         
         void add(const Student& s, int key) {
-            BTreeNode *res; Pair pair; pair.x = key; pair.y.add(s); 
-            if(header->son[0] == 0x00) { BTreeNode *root = new BTreeNode; header->son[0] = root; root->parent = header; ++numNode; }
-            if(!search(root(),pair.x,&res)) insert(res,pair);
-            else { pair.clear();
+            BTreeNode *res; 
+						Pair pair; 
+						pair.x = key; 
+						pair.y.add(s); 
+            if(header->son[0] == 0x00) { 
+							BTreeNode *root = new BTreeNode; 
+							header->son[0] = root; 
+							root->parent = header; 
+							++numNode; 
+						}
+            if(!search(root(), pair.x, &res)) insert(res,pair);
+            else { 
+							  pair.clear();
                 int m,t;
                 for (m = res->n - 1, t = 0; m - t > -1;)
                     {
-                        if (res->value[(int)((t + m)/2)].x == key) { if(!res->value[(int)((t + m)/2)].y.search(s.get_name())) res->value[(int)((t + m)/2)].y.add(s); return; }
+                        if (res->value[(int)((t + m)/2)].x == key) { 
+													if(!res->value[(int)((t + m)/2)].y.search(s.get_name())) res->value[(int)((t + m)/2)].y.add(s); 
+													return; 
+												}
                         if (res->value[(int)((t + m)/2)].x > key) m = (int) (m + t)/2 - 1;
                         if (res->value[(int)((t + m)/2)].x < key) t = (int) (m + t)/2 + 1;
                     }
@@ -448,16 +485,19 @@ public:
         void del(int key) {
             BTreeNode *res;
             if(header->son[0] == 0x00) return;
-            if(search(root(),key,&res)) B_delete(res,key);
+            if(search(root(), key, &res)) B_delete(res, key);
         }
         
         void Delete(const char *s, int n) {
             BTreeNode *res;
-            if(search(root(),n,&res)) {
+            if(search(root(), n, &res)) {
                 int m,t; 
                 for (m = res->n - 1, t = 0; m - t > -1;)
                     {
-                        if (res->value[(int)((t + m)/2)].x == n) { if(res->value[(int)((t + m)/2)].y.del_in_Deq(s)) del(n); break; }
+                        if (res->value[(int)((t + m)/2)].x == n) { 
+													if(res->value[(int)((t + m)/2)].y.del_in_Deq(s)) del(n); 
+													break; 
+												}
                         if (res->value[(int)((t + m)/2)].x > n) m = (int) (m + t)/2 - 1;
                         if (res->value[(int)((t + m)/2)].x < n) t = (int) (m + t)/2 + 1; 
                     } 
@@ -479,9 +519,11 @@ private:
         }
         
         void split(BTreeNode *node) {
-                    int k; if(node->parent->n == 0) k = 0;
-                    else  k = binsearch(node->parent,node->value[BTREE_DEG - 1].x);   
-                    BTreeNode *tmp = node; Pair p = node->value[BTREE_DEG - 1]; 
+                    int k; 
+										if(node->parent->n == 0) k = 0;
+                    else  k = binsearch(node->parent, node->value[BTREE_DEG - 1].x);   
+                    BTreeNode *tmp = node; 
+										Pair p = node->value[BTREE_DEG - 1]; 
                     BTreeNode *n_1 = new BTreeNode;
                     BTreeNode *n_2 = new BTreeNode; 
                     for(int j = node->parent->n + 1; j > k + 1; j--) node->parent->son[j] = node->parent->son[j - 1];
@@ -494,7 +536,8 @@ private:
                     for(int j = 0;j < BTREE_DEG - 1;j++) {
                         insert(n_1,node->value[j]);
                         insert(n_2,node->value[2*BTREE_DEG - j - 1]);
-                    } insert(n_2,node->value[BTREE_DEG]); ++numNode;
+                    } insert(n_2,node->value[BTREE_DEG]); 
+										++numNode;
                      
                     n_1->parent->son[k] = n_1;
                     n_1->parent->son[k + 1] = n_2;
@@ -509,11 +552,15 @@ private:
                 if(node->n > 0)  i = binsearch(node,pair.x);
                 else i = 0;
                 if(i >= 0) { 
-                    if(node->n == 0) { node->value[0] = pair; pair.clear(); }
+                    if(node->n == 0) { 
+											node->value[0] = pair; 
+											pair.clear(); 
+										}
                     else {
                         for (int j = node->n; j > i; j--) node->value[j] = node->value[j - 1];
-                        node->value[i] = pair; pair.clear();
-                    }   ++(node->n);
+                        node->value[i] = pair; 
+												pair.clear();
+                    }  ++(node->n);
                 }
                 if((node->n) == 2*BTREE_DEG) {  
                     if(node->parent != header) split(node);
@@ -522,7 +569,7 @@ private:
                         
                         root->son[0] = node;
                         root->son[0]->parent = root;
-                        node->parent=root;
+                        node->parent = root;
                         ++numNode;
                         root->parent = header;
                         header->son[0] = root; 
@@ -533,7 +580,7 @@ private:
             }
             
             int binsearch_1(BTreeNode *node, int key) {
-                int m,t;
+              int m,t;
               for (m = node->n - 1, t = 0; m - t > -1;)
                {
                 if (node->value[(int)((t + m)/2)].x == key) return (int)((t + m)/2);
@@ -548,20 +595,24 @@ private:
             void B_delete(BTreeNode *node, int key) {
                 if((node->n) >= BTREE_DEG || node == header->son[0]) {
                     if(node->son[0] == 0x00) {
-                        int k = binsearch_1(node,key); node->value[k].clear(); 
-                        for(int j = k; j < node->n - 1; j++) node->value[j] = node->value[j + 1]; node->value[node->n - 1].clear();
+                        int k = binsearch_1(node, key); 
+												node->value[k].clear(); 
+                        for(int j = k; j < node->n - 1; j++) node->value[j] = node->value[j + 1]; 
+												node->value[node->n - 1].clear();
                         node->n--;
                     }                        
                     else {
                         int i = 0;
-                        int k = binsearch_1(node,key);
+                        int k = binsearch_1(node, key);
                         if(node->son[k]->n >= BTREE_DEG) i = 1;
                         if(node->son[k + 1]->n >= BTREE_DEG) i = 2;
-                        BTreeNode *tmp; int k1; ListDeq p;
+                        BTreeNode *tmp; 
+												int k1; 
+												ListDeq p;
                         switch(i) {
                             case 0:
                                 join(node,k);
-				search(root(),key,&tmp);
+				                        search(root(),key,&tmp);
                                 B_delete(tmp,key);
                                 break;
                             case 1:
@@ -572,7 +623,8 @@ private:
                                 B_delete(tmp,k1);
                                 node->value[k].x = k1;
                                 node->value[k].y.clear();
-                                node->value[k].y = p; p.clear();
+                                node->value[k].y = p; 
+																p.clear();
                                 break;
                             case 2:
                                 tmp = node->son[k + 1];
@@ -583,47 +635,55 @@ private:
                                 node->value[k].x = k1;
                                 node->value[k].x = k1;
                                 node->value[k].y.clear();
-                                node->value[k].y = p; p.clear();
+                                node->value[k].y = p; 
+																p.clear();
                                 break;
-                         }
+                           }
                         }
 		    //}     
                 }
-                else { BTreeNode *tmp = node;
+                else { 
+									  BTreeNode *tmp = node;
                     while(tmp->n == BTREE_DEG - 1 && tmp != header->son[0]) tmp = tmp -> parent;
-                    int k = binsearch(tmp,key),i = 0;
+                    int k = binsearch(tmp, key), i = 0;
                     if(k > 0 && tmp->son[k - 1]->n >= BTREE_DEG) i = 1;
                     if(k < tmp->n && tmp->son[k + 1]->n >= BTREE_DEG) i = 2;
                     switch(i) {
                         case 0:
-                            if(k < tmp->n) join(tmp,k);
-                            else  join(tmp,k - 1);
+                            if(k < tmp->n) join(tmp, k);
+                            else  join(tmp, k - 1);
                             break;
                         case 1:
                             insert(tmp->son[k],tmp->value[k - 1]);
                             tmp->value[k - 1].clear();
-                            for(int j = k - 1; j < tmp->n - 1; j++) tmp->value[j] = tmp->value[j + 1]; tmp->value[tmp->n - 1].clear(); tmp->n--;
+                            for(int j = k - 1; j < tmp->n - 1; j++) tmp->value[j] = tmp->value[j + 1]; 
+														tmp->value[tmp->n - 1].clear(); 
+														tmp->n--;
                             insert(tmp,tmp->son[k - 1]->value[tmp->son[k - 1]->n - 1]);
-                            tmp->son[k - 1]->value[tmp->son[k - 1]->n - 1].clear(); tmp->son[k - 1]->n--;
+                            tmp->son[k - 1]->value[tmp->son[k - 1]->n - 1].clear(); 
+														tmp->son[k - 1]->n--;
                             for(int j = tmp->son[k]->n + 1; j >= 0; j--) tmp->son[k]->son[j + 1] = tmp->son[k]->son[j];
                             tmp->son[k]->son[0] = tmp->son[k - 1]->son[tmp->son[k - 1]->n];
                             if(tmp->son[k]->son[0]) tmp->son[k]->son[0]->parent = tmp->son[k];
                             tmp->son[k - 1]->son[tmp->son[k - 1]->n] = 0;
                             break;
                             case 2:
-                            insert(tmp->son[k],tmp->value[k]);
+                            insert(tmp->son[k], tmp->value[k]);
                             tmp->value[k].clear();
-                            for(int j = k; j < tmp->n - 1; j++) tmp->value[j] = tmp->value[j + 1]; tmp->value[tmp->n - 1].clear(); tmp->n--;
+                            for(int j = k; j < tmp->n - 1; j++) tmp->value[j] = tmp->value[j + 1]; 
+														tmp->value[tmp->n - 1].clear(); 
+														tmp->n--;
                             insert(tmp,tmp->son[k + 1]->value[0]);
                             tmp->son[k + 1]->value[0].clear();
-                            for(int j = 0; j < tmp->son[k + 1]->n - 1; j++) tmp->son[k + 1]->value[j] = tmp->son[k + 1]->value[j + 1]; tmp->son[k + 1]->n--;
+                            for(int j = 0; j < tmp->son[k + 1]->n - 1; j++) tmp->son[k + 1]->value[j] = tmp->son[k + 1]->value[j + 1]; 
+														tmp->son[k + 1]->n--;
                             tmp->son[k]->son[tmp->son[k]->n] = tmp->son[k + 1]->son[0];
                             if(tmp->son[k]->son[tmp->son[k]->n]) tmp->son[k]->son[tmp->son[k]->n]->parent = tmp->son[k]; 
                             for(int j = 0; j < tmp->son[k + 1]->n + 1; j++) tmp->son[k + 1]->son[j] = tmp->son[k + 1]->son[j + 1];
                             break;
                     }
-                search(root(),key,&tmp);
-                B_delete(tmp,key);
+                search(root(),key, &tmp);
+                B_delete(tmp, key);
              }
             }
             
@@ -633,13 +693,15 @@ private:
               for(int j = node->son[k]->n; j < node->son[k + 1]->n + node->son[k]->n + 1; j++) { if(node->son[k]->son[j]) node->son[k]->son[j]->parent = node->son[k]; }
               for(int j = 0; j < node->son[k + 1]->n; j++) insert(node->son[k],node->son[k + 1]->value[j]);  
               for(int j = 0; j < node -> son[k + 1] -> n; j++) node->son[k + 1]->value[j].clear(); 
-                delete node->son[k + 1]; 
-                node->value[k].clear();
-                for(int j = k; j < node -> n - 1; j++) {
-                            node->value[j] = node->value[j + 1];
-                            node->son[j + 1] = node->son[j + 2];
-                } if(node->n > 1) node->value[node -> n - 1].clear(); node->n--;
-              if(node->n == 0) { BTreeNode *tmp = 0; tmp = header->son[0];
+              delete node->son[k + 1]; 
+              node->value[k].clear();
+              for(int j = k; j < node -> n - 1; j++) {
+                        node->value[j] = node->value[j + 1];
+                        node->son[j + 1] = node->son[j + 2];
+              } 
+			        if(node->n > 1) node->value[node -> n - 1].clear(); node->n--;
+              if(node->n == 0) { 
+				          BTreeNode *tmp = 0; tmp = header->son[0];
                   header->son[0] = node->son[0]; header->son[0]->parent = header;
                   if(tmp) delete tmp;
               }
