@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 
-const int SIZE_BUFFER = 1024;
+const int SIZE_BUFFER = 1e7;
 const int DEQ_MAXELEM = 29;//1024;
 const int BTREE_DEG = 10;
 using namespace std;
