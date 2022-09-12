@@ -11,6 +11,6 @@ alphabet = 'qwertyuiopasdfghjklzxcvbnm'
 for j in range(n):
     s = ''
     for i in range(5): s += rand.choice(alphabet)   
-    File.write(f"{s} {rand.randint(0,n/2)} {s}@server.com\n")
+    File.write(f"{s} {rand.randint(0,n*10)} {s}@server.com\n")
     
 
