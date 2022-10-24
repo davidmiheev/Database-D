@@ -10,11 +10,12 @@ This project is an implementation of simple database from scratch. It uses [B-tr
 
 ```sh
 git clone https://github.com/DavidOSX/Database-D
+cd Database-D
 chmod +x install.sh
 ./install.sh
 ```
 
-## Using
+## Usage
 After you install this database to run it just type:
 ```sh
 ./database-d
