@@ -12,11 +12,11 @@ int main() {
     FILE *f;
     f = fopen("test.txt","r");
     BTree tree;
-    char key[256],name[NAME_LEN],info[INFO_LEN]; 
-	  int n,i = 0;
-        cout << "\n+------------+\n";
-        cout <<   "| Database D |\n";
-        cout <<   "+------------+\n\n";
+    char key[256], name[NAME_LEN], info[INFO_LEN]; 
+	  int n, i = 0;
+    cout << "\n+------------+\n";
+    cout <<   "| Database D |\n";
+    cout <<   "+------------+\n\n";
     while(1) {
         cout << "> ";
         cin >> key;
@@ -24,39 +24,53 @@ int main() {
         if(strcmp(key, "add") == 0) { 
 					name[0] = info[0] = key[0] = '\0'; 
           cout << "Enter student's name: ";
+					
           while(i == 0 || i == 1 || (name[i - 1] != '\n' && i < NAME_LEN)) {
              scanf("%c", &name[i]); 
              i++; 
-          } 
+          }
+					
 			    name[i - 1] = '\0'; 
-			    for(int j = 0; j < i - 1; j++) name[j] = name[j + 1]; i = 0;
+			    for(int j = 0; j < i - 1; j++) name[j] = name[j + 1];
+					
+					i = 0;
           cout << "Enter number of this student's group (without spaces): "; cin >> n;
           cout << "Enter any information about this student: ";
+					
           while(i == 0 || i == 1 || (info[i - 1] != '\n' && i < INFO_LEN)) {
                 scanf("%c", &info[i]);
                 i++;
           } 
-					info[i - 1] = '\0'; i = 0;
+					
+					info[i - 1] = '\0'; 
+					i = 0;
           Student s(name,n,info); 
 					tree.add(s,n);  
 					tree.showtree(); 
 					cout << endl; /*tree.print(tree.root());*/ 
 				}
+				
         if(strcmp(key, "search") == 0) { 
 						name[0] = key[0] = '\0';
             cout << "Enter student's name: ";
+						
             while(i == 0 || i == 1 || (name[i - 1] != '\n' && i < NAME_LEN)) {
                 scanf("%c", &name[i]);
                 i++;
             } 
+						
 			      name[i - 1] = '\0'; 
-			      for(int j = 0;j < i - 1;j++) name[j] = name[j + 1]; i = 0;
+						
+			      for(int j = 0; j < i - 1; j++) name[j] = name[j + 1];
+						
+						i = 0;
             cout << "Enter number of this student's group (without spaces): ";
             cin >> n;
             cout << endl;
             BTreeNode *res;
+						
             if(tree.search(tree.root(), n, &res)) {
-                int m,t; 
+                int m, t; 
                 for (m = res->n - 1, t = 0; m - t > -1; )
                     {
                         if (res->value[(int)((t + m)/2)].x == n) 
@@ -65,17 +79,19 @@ int main() {
 													break; 
 												}
                         if (res->value[(int)((t + m)/2)].x > n) m = (int) (m + t)/2 - 1;
-                        if (res->value[(int)((t + m)/2)].x < n) t = (int) (m + t)/2 + 1; //cout << t << endl;
+                        if (res->value[(int)((t + m)/2)].x < n) t = (int) (m + t)/2 + 1;
                     } cout << endl;
-            }
-            else cout << "student not found\n" << endl;
+            } else cout << "student not found\n" << endl;
+						
         }
+				
         if(strcmp(key,"search_by_num") == 0) { 
 					  key[0] = '\0';
             cout << "Enter number of this student's group (without spaces): ";
             cin >> n;
             cout << endl;
             BTreeNode *res;
+						
             if(tree.search(tree.root(), n, &res)) {
                 int m,t; 
                 for (m = res->n - 1, t = 0; m - t > -1;)
@@ -84,9 +100,9 @@ int main() {
                         if (res->value[(int)((t + m)/2)].x > n) m = (int) (m + t)/2 - 1;
                         if (res->value[(int)((t + m)/2)].x < n) t = (int) (m + t)/2 + 1;
                     } cout <<  endl;
-            }
-            else cout << "students not found\n" << endl;
+            } else cout << "students not found\n" << endl;
         }
+				
         if(strcmp(key,"del_by_num") == 0) { 
 					key[0] = '\0'; 
 					cout << "Enter number of group (without spaces): "; 
@@ -95,22 +111,30 @@ int main() {
 					tree.showtree(); 
 					cout << endl; 
 				}
+				
         if(strcmp(key, "del") == 0) { 
 			      name[0] = key[0] = '\0';
             cout << "Enter student's name: ";
+						
             while(i == 0 || i == 1 || (name[i - 1] != '\n' && i < NAME_LEN)) {
                 scanf("%c", &name[i]);
                 i++;
-            } 
-						name[i - 1] = '\0'; 
-						for(int j = 0; j < i - 1; j++) name[j] = name[j + 1]; i = 0;
+            }
+						
+						name[i - 1] = '\0';
+						
+						for(int j = 0; j < i - 1; j++) name[j] = name[j + 1]; 
+						
+						i = 0;
             cout << "Enter number of this student's group (without spaces): ";
             cin >> n;
             tree.Delete(name, n);
         }
+				
         if(strcmp(key, "test") == 0) {  
 			 	  if(f == NULL) throw(Exception("file test.txt not found"));
 			    key[0] = '\0';
+					
           while(!feof(f)) {
                 fscanf(f,"%s%d%s",name, &n, info);
                 Student s(name, n, info);
@@ -118,12 +142,15 @@ int main() {
              //cout << name << endl;
           } tree.showtree();
         }
+				
         if(strcmp(key, "q") == 0) break;
         if(key[0] != '\0') printHelp();
-    } 
+    }
+		
     tree.clear(tree.root());
+		
    } catch(Exception a) {
-        cout << a.reason << endl; 
+     		cout << a.reason << endl; 
    }
     
     return 0;
