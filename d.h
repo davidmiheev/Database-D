@@ -44,29 +44,31 @@ public:
         name(new char[strlen(s) + 1]),
         num_group(n),
         info(new char[strlen(inf) + 1]) 
-		{ 
-			strcpy(name, s); 
-			strcpy(info, inf); 
-		}
+    { 
+        strcpy(name, s); 
+	      strcpy(info, inf); 
+    }
     
     Student(const Student& s):
         name(new char[strlen(s.name) + 1]),
         num_group(s.num_group),
         info(new char[strlen(s.info) + 1])
     { 
-			strcpy(name,s.name); 
-			strcpy(info,s.info); 
-		}
+	      strcpy(name,s.name); 
+	      strcpy(info,s.info); 
+    }
     
     Student& operator=(const Student& s) { 
-			  if(this != &s) { 
-					if(name) delete[] name; 
-					if(info) delete[] info; 
-					name = new char[strlen(s.name) + 1]; 
-          num_group = s.num_group;
-          info = new char[strlen(s.info) + 1]; strcpy(name, s.name); strcpy(info,s.info);
-       } 
+        if(this != &s) { 
+						if(name) delete[] name; 
+						if(info) delete[] info; 
+						name = new char[strlen(s.name) + 1]; 
+          	num_group = s.num_group;
+          	info = new char[strlen(s.info) + 1]; strcpy(name, s.name); strcpy(info,s.info);
+        }
+
        return *this;
+	    
     }
     
     bool operator>(const Student& b) {
@@ -86,7 +88,7 @@ public:
     const char* get_info() const { return info; }
     void set_info(const char *s)  { strcpy(info, s); }
     void print() { 
-			if(name != 0) cout << "name: " 
+		       if(name != 0) cout << "name: " 
 				                 << name 
 												 << " " 
 												 << num_group 
