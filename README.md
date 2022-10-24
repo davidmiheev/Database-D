@@ -1,6 +1,6 @@
 # Database-D
 
-This project is an implementation of simple database from scratch. It uses [B-tree](https://en.wikipedia.org/wiki/B-tree) to store tables and [Deques](https://en.wikipedia.org/wiki/Double-ended_queue) to store the data in each table. Database-D has been created as an educational project (database for processing the data about students of some school or university) and not intended for production, at least in current state.
+This project is an implementation of simple database from scratch in one file. It uses [B-tree](https://en.wikipedia.org/wiki/B-tree) to store tables and [Deques](https://en.wikipedia.org/wiki/Double-ended_queue) to store the data in each table. Database-D has been created as an educational project (database for processing the data about students of some school or university) and not intended for production, at least in current state.
 
 ## Requirements
 * C++ compiler (e.g. gcc or clang)
