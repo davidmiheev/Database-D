@@ -39,7 +39,7 @@ class Student {
 	int    num_group;
 	char * info;
 
-	public:
+public:
 		Student():
 			name        (0),
 			num_group   (0),
