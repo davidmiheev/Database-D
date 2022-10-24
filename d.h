@@ -655,19 +655,19 @@ private:
 
 	}
 
-	void		split     (BTreeNode * node) {
-		int		k;
-		if              (node->parent->n == 0)
-					k =		0;
+	void split(BTreeNode * node) {
+		int	k;
+		if  (node->parent->n == 0)
+			k =	0;
 		else
-					k =		binsearch(node->parent, node->value[BTREE_DEG - 1].x);
-		BTreeNode      *tmp = node;
-		Pair		p = node->value[BTREE_DEG - 1];
-		BTreeNode      *n_1 = new BTreeNode;
-		BTreeNode      *n_2 = new BTreeNode;
+			k =	binsearch(node->parent, node->value[BTREE_DEG - 1].x);
+		BTreeNode * tmp = node;
+		Pair p = node->value[BTREE_DEG - 1];
+		BTreeNode * n_1 = new BTreeNode;
+		BTreeNode * n_2 = new BTreeNode;
 		for(int j = node->parent->n + 1; j > k + 1; j--)
-					node        ->parent->son[j] = node->parent->son[j - 1];
-				n_1         ->parent = node->parent;
+					node->parent->son[j] = node->parent->son[j - 1];
+				n_1->parent = node->parent;
 				n_2         ->parent = node->parent;
 		for             (int j = 0; j < BTREE_DEG; j++)
 					n_1         ->son[j] = node->son[j];

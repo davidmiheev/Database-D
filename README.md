@@ -22,7 +22,6 @@ After you install this database to run it just type:
 ```
 
 Nowadays you can use these commands:
-
 * 'add' -   add student's name and group number
 * 'search' - search for a student by the name and the group number
 * 'search_by_num' -  search for a students by the group number
